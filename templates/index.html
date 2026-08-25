@@ -1,25 +1,46 @@
 {% extends "base.html" %}
 {% block canonical %}{{ config.base_url }}/{% endblock canonical %}
 {% block content %}
-<div class="prose hero">
-  <h1 class="tagline">Every journey starts with a conversation. Every conversation ends as a record.</h1>
+<div class="hero">
+  <h1 class="tagline">Every journey starts with a conversation.<br>
+  <em>Every conversation ends as a record.</em></h1>
+
+  <p class="hero-sub">A software development methodology for the age of AI agents — trunk-based development, lifted by one move.</p>
+
+  <nav class="entry-links" aria-label="Explore the methodology">
+    <a class="btn btn-primary" href="/methodology/">Explore the model</a>
+    <a class="btn" href="/invariants/">The three invariants</a>
+    <a class="btn" href="/comparisons/">Comparisons</a>
+  </nav>
+
+  <div class="grid" aria-label="The three components">
+    <div class="card">
+      <h2>Baseline</h2>
+      <p>The whole product description under version control — not just code. <strong>Governing truth:</strong> the artifacts that direct all work.</p>
+    </div>
+    <div class="card">
+      <h2>Journey</h2>
+      <p>Branches off the baseline carrying <strong>deltas, decisions, and provenance</strong> — the review object is the understanding, not the code.</p>
+    </div>
+    <div class="card">
+      <h2>Return</h2>
+      <p>Deltas fold into the baseline; the journey freezes into an <strong>immutable record</strong> — the product's memory of why.</p>
+    </div>
+  </div>
+
+  <p class="axiom"><strong>The axiom:</strong> consensus binds to intent and observable behavior · code is the disposable projection</p>
 
   <blockquote class="pitch">
+    <span class="pitch-label">The thirty-second version</span>
     <p>Trunk-based development won for humans, but its trunk only holds code. Everything else a product is — the intent, the decisions, the behavior we promised — lived in developers' heads. Agents don't have heads: whatever they must know has to be materialized.</p>
     <p>So we lift trunk-based development by one move. The trunk becomes the baseline, the whole product description under version control. The branch becomes a journey that proposes deltas to any of it, plus the decisions and evidence behind them, passing consensus gates where roles sign off. On return, the deltas merge into the baseline and the journey freezes into an immutable record — the product's memory of why it is the way it is. Code becomes the disposable projection; consensus binds to intent and observable behavior.</p>
   </blockquote>
 
-  <nav class="entry-links" aria-label="Explore the methodology">
-    <a href="/methodology/">The Model</a>
-    <a href="/invariants/">Invariants</a>
-    <a href="/comparisons/">Comparisons</a>
-  </nav>
-
-  <p class="blog-hint"><a href="/blog/">or read the blog</a></p>
-
   <aside class="tldr">
-    <p class="tldr-label">tl;dr — the ten-second version</p>
+    <span class="tldr-label">tl;dr — the ten-second version</span>
     <p>It's trunk-based development with one lift: the trunk holds the whole product, not just code — and the branch is a deliberation journey, carrying decisions and evidence and deltas over that whole product, which returns to the trunk as permanent understanding.</p>
   </aside>
+
+  <p class="blog-hint"><a href="/blog/">Read the blog →</a></p>
 </div>
 {% endblock %}

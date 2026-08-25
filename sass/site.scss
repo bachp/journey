@@ -1,38 +1,50 @@
 // journey.pm — one stylesheet, all tokens as CSS custom properties.
-// Light-first with a real dark mode via prefers-color-scheme.
-// No external requests, no JS.
+// Design language: modern dark, after nautilustrader.io.
+// Near-black canvas, elevated surfaces, hairline borders, one aqua accent.
+// Self-hosted Inter variable font. No external requests, no JS.
+
+// ---------------------------------------------------------------- font ----
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-var.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 // ---------------------------------------------------------------- tokens ----
 
 :root {
-  // Light: near-black ink on warm paper, one muted clay/rust accent.
-  --paper: #fbfaf8;
-  --paper-raised: #f2efe8;
-  --ink: #1c1e21;
-  --ink-soft: #55585e;
-  --accent: #a8442a; // links, the journey mark, small labels
-  --rule: #ddd8cd;
+  // Dark canvas and layered surfaces.
+  --bg: #17171a;
+  --surface: #1e1e1e;
+  --surface-2: #222224;
+  --surface-3: #282829;
+  --border: #3a3a3d;
+  --border-soft: #2a2a2c;
 
-  // Sans for UI/chrome and headings; serif for long-form prose.
-  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif;
-  --font-prose: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  // Ink: white foreground, zinc greys for hierarchy.
+  --ink: #f4f4f5;
+  --ink-soft: #a1a1aa;
+  --ink-faint: #71717a;
+
+  // One accent: aqua, with glow and tint variants.
+  --accent: #00cfbe;
+  --accent-ink: #052e2b; // text on accent-filled surfaces
+  --accent-soft: rgba(0, 207, 190, 0.4);
+  --accent-tint: rgba(0, 207, 190, 0.08);
+  --accent-glow: rgba(0, 207, 190, 0.16);
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, Consolas,
     "Liberation Mono", monospace;
 
+  --radius: 12px;
+  --radius-sm: 8px;
   --measure: 68ch;
   --gutter: 1.5rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #16181b;
-    --paper-raised: #1e2126;
-    --ink: #e8e6e1;
-    --ink-soft: #a9a7a0;
-    --accent: #d97a5d;
-    --rule: #33363c;
-  }
 }
 
 // ------------------------------------------------------------------ base ----
@@ -45,35 +57,59 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--bg);
+  // Faint aqua glow bleeding from the top of the canvas.
+  background-image: radial-gradient(
+    ellipse 90% 40% at 50% -10%,
+    var(--accent-tint),
+    transparent 70%
+  );
+  background-repeat: no-repeat;
   color: var(--ink);
-  font-family: var(--font-ui);
+  font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
   background: var(--accent);
-  color: var(--paper);
+  color: var(--accent-ink);
 }
 
 a {
   color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
 }
 
 a:hover {
-  text-decoration-thickness: 2px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+  border-radius: 2px;
+}
+
+// Subtle dark scrollbar.
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface-3);
+    border-radius: 5px;
+    border: 2px solid var(--bg);
+  }
 }
 
 // Visually hidden, reachable by keyboard — used by the skip link.
@@ -82,19 +118,22 @@ a:hover {
   left: -9999px;
   top: 0;
   padding: 0.5rem 1rem;
-  background: var(--paper);
+  background: var(--surface);
   color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   z-index: 10;
 }
 
 .skip-link:focus {
-  left: 0;
+  left: 1rem;
+  top: 1rem;
 }
 
 // ------------------------------------------------------------------ mark ----
 
 // The journey mark: a circle (the baseline) with one line leaving it and
-// returning to it. currentColor, so it takes the accent in any context.
+// returning to it. Takes the accent in any context.
 .mark {
   display: inline-block;
   width: 1.4rem;
@@ -111,118 +150,153 @@ a:hover {
 // --------------------------------------------------------------- header ----
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem 1.5rem;
-  max-width: 56rem;
+  max-width: 64rem;
   margin: 0 auto;
-  padding: 1.25rem var(--gutter) 0.75rem;
-  border-bottom: 1px solid var(--rule);
+  padding: 0.65rem var(--gutter);
+  background: rgba(23, 23, 26, 0.78);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .wordmark {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  // Wordmark is chrome, not prose: sans, lowercase, letterspaced.
-  font-family: var(--font-ui);
+  font-family: var(--font-mono);
   font-size: 0.95rem;
-  font-weight: 650;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--ink);
   text-decoration: none;
-  padding: 0.75rem 0; // keep the hit target >= 44px
+  padding: 0.7rem 0; // keep the hit target >= 44px
 }
 
 .wordmark:hover {
   color: var(--accent);
+  text-decoration: none;
 }
 
 .site-nav {
   display: flex;
   flex-wrap: wrap; // collapses to a wrapped row on narrow screens; no JS
-  gap: 0.25rem;
-  font-size: 0.95rem;
+  gap: 0.15rem;
+  font-size: 0.92rem;
 }
 
 .site-nav a {
-  color: var(--ink);
+  color: var(--ink-soft);
   text-decoration: none;
-  padding: 0.7rem 0.8rem; // hit target >= 44px
-  border-radius: 4px;
+  padding: 0.55rem 0.85rem; // hit target comfort
+  border-radius: 999px;
+  transition: color 0.15s, background 0.15s;
 }
 
 .site-nav a:hover,
 .site-nav a:focus-visible {
-  color: var(--accent);
-  text-decoration: underline;
+  color: var(--ink);
+  background: var(--surface-2);
+  text-decoration: none;
 }
 
 // ----------------------------------------------------------------- main ----
 
 .site-main {
-  max-width: 56rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: 0 var(--gutter);
-  min-height: 50vh;
+  min-height: 55vh;
 }
 
 // ---------------------------------------------------------------- prose ----
 
-// Long-form: serif at 18px/1.7, ~68ch measure, pretty wrapping.
+// Long-form: Inter at 17px/1.75, ~68ch measure, pretty wrapping.
 .prose {
-  font-family: var(--font-prose);
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.75;
   max-width: var(--measure);
-  padding: 2.5rem 0 3rem;
+  padding: 2.75rem 0 3rem;
   text-wrap: pretty;
 }
 
 .prose h1,
 .prose h2,
 .prose h3 {
-  font-family: var(--font-ui);
-  letter-spacing: -0.01em;
-  line-height: 1.25;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
   text-wrap: balance;
+  color: var(--ink);
 }
 
 .prose h1 {
-  font-size: 1.85rem;
+  font-size: 2rem;
   font-weight: 700;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.4rem;
 }
 
 .prose h2 {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 650;
-  margin: 2.4rem 0 0.9rem;
+  margin: 2.6rem 0 0.9rem;
+}
+
+.prose h3 {
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin: 2rem 0 0.7rem;
 }
 
 .prose p {
-  margin: 0 0 1.3em;
+  margin: 0 0 1.35em;
+  color: var(--ink);
 }
 
-.prose a {
-  color: var(--accent);
+.prose li {
+  color: var(--ink);
 }
 
 .prose code {
   font-family: var(--font-mono);
-  font-size: 0.82em;
-  background: var(--paper-raised);
-  border-radius: 3px;
-  padding: 0.1em 0.4em;
+  font-size: 0.84em;
+  color: var(--accent);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 5px;
+  padding: 0.12em 0.42em;
+}
+
+.prose pre {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--ink);
+  font-size: 0.85rem;
 }
 
 .prose blockquote {
-  margin: 1.6em 0;
-  padding: 0.2em 0 0.2em 1.2em;
+  margin: 1.8em 0;
+  padding: 0.9em 1.3em;
   border-left: 3px solid var(--accent);
-  font-style: italic;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface);
+  color: var(--ink-soft);
 }
 
 .prose blockquote p:last-child {
@@ -236,90 +310,224 @@ a:hover {
 }
 
 .prose li {
-  margin: 0.4em 0;
+  margin: 0.45em 0;
 }
 
 .prose table {
   width: 100%;
   border-collapse: collapse;
-  font-family: var(--font-ui);
   font-size: 0.9rem;
-  line-height: 1.5;
-  margin: 1.6em 0;
+  line-height: 1.55;
+  margin: 1.8em 0;
+  display: block;
+  overflow-x: auto; // wide comparison tables scroll on mobile
 }
 
 .prose th,
 .prose td {
-  border: 1px solid var(--rule);
-  padding: 0.55em 0.8em;
+  border: 1px solid var(--border-soft);
+  padding: 0.6em 0.85em;
   text-align: left;
   vertical-align: top;
 }
 
 .prose th {
-  background: var(--paper-raised);
-  font-weight: 650;
+  background: var(--surface-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prose tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.015);
 }
 
 .prose hr {
   border: 0;
-  border-top: 1px solid var(--rule);
-  margin: 2.5rem 0;
+  border-top: 1px solid var(--border-soft);
+  margin: 2.75rem 0;
 }
 
 // -------------------------------------------------------------- home hero ----
 
+.hero {
+  max-width: 52rem;
+  padding: 4.5rem 0 2.5rem;
+}
+
 .hero .tagline {
-  font-family: var(--font-prose);
-  font-size: 1.9rem;
-  line-height: 1.35;
-  font-weight: 400;
-  margin-bottom: 1.8rem;
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+  line-height: 1.18;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.4rem;
+  text-wrap: balance;
 }
 
-.hero .pitch {
-  font-size: 1.02rem;
+.hero .tagline em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--accent) 0%, #6ee7dd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
+.hero-sub {
+  font-size: 1.12rem;
+  color: var(--ink-soft);
+  margin: 0 0 2.2rem;
+  max-width: 44ch;
+}
+
+// Buttons: aqua-filled primary, quiet ghost default.
 .entry-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
-  margin: 2rem 0 1rem;
-  font-family: var(--font-ui);
+  gap: 0.75rem;
+  margin: 0 0 1rem;
 }
 
-.entry-links a {
+.btn {
   display: inline-block;
-  padding: 0.7rem 1.3rem;
-  border: 1px solid var(--accent);
+  padding: 0.68rem 1.35rem;
+  border: 1px solid var(--border);
   border-radius: 999px;
-  color: var(--accent);
-  text-decoration: none;
+  color: var(--ink);
+  background: var(--surface-2);
   font-size: 0.95rem;
+  font-weight: 550;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s,
+    transform 0.15s;
 }
 
-.entry-links a:hover,
-.entry-links a:focus-visible {
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 0 24px var(--accent-glow);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
   background: var(--accent);
-  color: var(--paper);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 650;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 24px var(--accent-glow);
+}
+
+// -------------------------------------------------------- component cards ----
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+  gap: 1rem;
+  max-width: 56rem;
+  margin: 2.5rem 0 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem 1.2rem;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.card:hover {
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 32px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+.card h2 {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.7rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.card p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+// Axiom strip under the cards.
+.axiom {
+  max-width: 56rem;
+  margin: 1.25rem 0 0;
+  padding: 0.95rem 1.4rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.axiom strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+// Home pitch block.
+.pitch {
+  max-width: 56rem;
+  margin: 3.5rem 0 0;
+  padding: 1.6rem 1.9rem 1.2rem;
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.pitch-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: -0.4rem 0 1rem;
 }
 
 .blog-hint {
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
+  max-width: 56rem;
+  font-size: 0.95rem;
   color: var(--ink-soft);
-  margin-bottom: 2.2rem;
+  margin: 2.4rem 0 4rem;
 }
 
 // Small label + ten-second version box.
 .tldr {
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
-  background: var(--paper-raised);
-  border-radius: 4px;
-  padding: 1.1rem 1.4rem 0.4rem;
-  font-size: 1rem;
+  max-width: 56rem;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.45rem 0.45rem;
+  font-size: 0.98rem;
   line-height: 1.65;
 }
 
@@ -328,13 +536,14 @@ a:hover {
 }
 
 .tldr-label {
-  font-family: var(--font-ui);
+  display: block;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.7rem;
 }
 
 // ------------------------------------------------------------- blog lists ----
@@ -343,7 +552,6 @@ a:hover {
   list-style: none;
   margin: 1.5rem 0;
   padding: 0;
-  font-family: var(--font-ui);
   font-size: 0.98rem;
 }
 
@@ -352,34 +560,49 @@ a:hover {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.4rem 0.9rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--rule);
-  margin: 0;
+  padding: 0.95rem 1.1rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  margin: 0 0 0.7rem;
+  transition: border-color 0.15s;
 }
 
-.post-list li:first-child {
-  border-top: 1px solid var(--rule);
+.post-list li:hover {
+  border-color: var(--accent-soft);
 }
 
-.post-meta {
-  color: var(--ink-soft);
-  font-size: 0.85rem;
-  font-family: var(--font-ui);
+.post-list a {
+  color: var(--ink);
+  font-weight: 550;
 }
 
-.post-header .post-meta {
-  margin: -0.5rem 0 1.8rem;
-}
-
-.post-tags a {
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.post-list a:hover {
+  color: var(--accent);
   text-decoration: none;
 }
 
+.post-meta {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+}
+
+.post-header .post-meta {
+  margin: -0.5rem 0 2rem;
+}
+
+.post-tags a {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
 .post-tags a:hover {
-  text-decoration: underline;
+  color: var(--accent);
+  text-decoration: none;
 }
 
 .tag-list {
@@ -387,8 +610,23 @@ a:hover {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.2rem;
-  font-family: var(--font-ui);
+  gap: 0.5rem;
+}
+
+.tag-list a {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.tag-list a:hover {
+  border-color: var(--accent-soft);
+  color: var(--accent);
+  text-decoration: none;
 }
 
 // -------------------------------------------------------------- 404 page ----
@@ -403,7 +641,6 @@ a:hover {
 
 .notfound {
   text-align: center;
-  font-family: var(--font-prose);
 }
 
 .notfound .mark-lg {
@@ -411,9 +648,9 @@ a:hover {
 }
 
 .notfound-label {
-  font-family: var(--font-ui);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
@@ -429,13 +666,12 @@ a:hover {
 // ---------------------------------------------------------------- footer ----
 
 .site-footer {
-  max-width: 56rem;
+  max-width: 64rem;
   margin: 3rem auto 0;
-  padding: 1.25rem var(--gutter) 3rem;
-  border-top: 1px solid var(--rule);
-  font-family: var(--font-ui);
+  padding: 1.4rem var(--gutter) 3.5rem;
+  border-top: 1px solid var(--border-soft);
   font-size: 0.85rem;
-  color: var(--ink-soft);
+  color: var(--ink-faint);
 }
 
 .site-footer p {
@@ -446,7 +682,7 @@ a:hover {
 }
 
 .site-footer a {
-  color: var(--ink);
+  color: var(--ink-soft);
   padding: 0.5rem 0; // comfortable hit target
 }
 
