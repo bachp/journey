@@ -1,0 +1,20 @@
+# journey.pm — The Deliberation Journey
+# Zola site configuration. See BRIEF.md (section 5) for the contract.
+
+base_url = "https://journey.pm"
+title = "The Deliberation Journey"
+author = "Pascal"
+description = "It's trunk-based development with one lift: the trunk holds the whole product, not just code — and the branch is a deliberation journey, carrying decisions and evidence and deltas over that whole product, which returns to the trunk as permanent understanding."
+default_language = "en"
+
+# Feeds: Atom only (no search — it needs JS, and this site ships none).
+generate_feeds = true
+feed_filenames = ["atom.xml"]
+generate_sitemap = true
+
+taxonomies = [
+  { name = "tags", render = true, feed = true },
+]
+
+# Compile sass/site.scss -> static/site.css
+compile_sass = true

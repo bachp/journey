@@ -1,0 +1,21 @@
+# The Deliberation Journey — journey.pm
+
+The Deliberation Journey is a software-development methodology for the agentic
+era: trunk-based development with one lift — the trunk holds the whole product,
+not just code, and each branch is a deliberation journey carrying decisions,
+evidence, and deltas over that whole product, which returns to the trunk as
+permanent understanding. Consensus binds to intent and observable behavior;
+code is a disposable projection. This site is the methodology's public
+documentation: plain prose, no tracking, no external requests.
+
+## Pages
+
+- [The Model](https://journey.pm/methodology/): baseline, journey, return — the core model, its one-lift statement, its axiom, and its two change regimes.
+- [Invariants](https://journey.pm/invariants/): the three invariants any conforming implementation must provide — the conformance test for the methodology.
+- [Comparisons](https://journey.pm/comparisons/): a condensed map of the landscape as partial implementations: trunk-based development, OpenSpec, Spec Kit, Kiro.
+- [Blog](https://journey.pm/blog/): working notes — the naming story, the announcement, and (planned) comparison deep-dives and the metrics model.
+- [About](https://journey.pm/about/): what this site is, who runs it, and the license.
+
+## Feed
+
+- [Atom](https://journey.pm/atom.xml): the blog feed.

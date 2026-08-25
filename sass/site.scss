@@ -1,0 +1,455 @@
+// journey.pm — one stylesheet, all tokens as CSS custom properties.
+// Light-first with a real dark mode via prefers-color-scheme.
+// No external requests, no JS.
+
+// ---------------------------------------------------------------- tokens ----
+
+:root {
+  // Light: near-black ink on warm paper, one muted clay/rust accent.
+  --paper: #fbfaf8;
+  --paper-raised: #f2efe8;
+  --ink: #1c1e21;
+  --ink-soft: #55585e;
+  --accent: #a8442a; // links, the journey mark, small labels
+  --rule: #ddd8cd;
+
+  // Sans for UI/chrome and headings; serif for long-form prose.
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-prose: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-mono: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --measure: 68ch;
+  --gutter: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #16181b;
+    --paper-raised: #1e2126;
+    --ink: #e8e6e1;
+    --ink-soft: #a9a7a0;
+    --accent: #d97a5d;
+    --rule: #33363c;
+  }
+}
+
+// ------------------------------------------------------------------ base ----
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+// Visually hidden, reachable by keyboard — used by the skip link.
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.5rem 1rem;
+  background: var(--paper);
+  color: var(--accent);
+  z-index: 10;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+// ------------------------------------------------------------------ mark ----
+
+// The journey mark: a circle (the baseline) with one line leaving it and
+// returning to it. currentColor, so it takes the accent in any context.
+.mark {
+  display: inline-block;
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--accent);
+  flex: none;
+}
+
+.mark-lg {
+  width: 4rem;
+  height: 4rem;
+}
+
+// --------------------------------------------------------------- header ----
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 1.25rem var(--gutter) 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  // Wordmark is chrome, not prose: sans, lowercase, letterspaced.
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0.75rem 0; // keep the hit target >= 44px
+}
+
+.wordmark:hover {
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap; // collapses to a wrapped row on narrow screens; no JS
+  gap: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.site-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0.7rem 0.8rem; // hit target >= 44px
+  border-radius: 4px;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+// ----------------------------------------------------------------- main ----
+
+.site-main {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  min-height: 50vh;
+}
+
+// ---------------------------------------------------------------- prose ----
+
+// Long-form: serif at 18px/1.7, ~68ch measure, pretty wrapping.
+.prose {
+  font-family: var(--font-prose);
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: var(--measure);
+  padding: 2.5rem 0 3rem;
+  text-wrap: pretty;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-family: var(--font-ui);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.prose h1 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+}
+
+.prose h2 {
+  font-size: 1.3rem;
+  font-weight: 650;
+  margin: 2.4rem 0 0.9rem;
+}
+
+.prose p {
+  margin: 0 0 1.3em;
+}
+
+.prose a {
+  color: var(--accent);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--paper-raised);
+  border-radius: 3px;
+  padding: 0.1em 0.4em;
+}
+
+.prose blockquote {
+  margin: 1.6em 0;
+  padding: 0.2em 0 0.2em 1.2em;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 1.4em;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin: 0.4em 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 1.6em 0;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--rule);
+  padding: 0.55em 0.8em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: var(--paper-raised);
+  font-weight: 650;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.5rem 0;
+}
+
+// -------------------------------------------------------------- home hero ----
+
+.hero .tagline {
+  font-family: var(--font-prose);
+  font-size: 1.9rem;
+  line-height: 1.35;
+  font-weight: 400;
+  margin-bottom: 1.8rem;
+}
+
+.hero .pitch {
+  font-size: 1.02rem;
+}
+
+.entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 2rem 0 1rem;
+  font-family: var(--font-ui);
+}
+
+.entry-links a {
+  display: inline-block;
+  padding: 0.7rem 1.3rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.entry-links a:hover,
+.entry-links a:focus-visible {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.blog-hint {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 2.2rem;
+}
+
+// Small label + ten-second version box.
+.tldr {
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  background: var(--paper-raised);
+  border-radius: 4px;
+  padding: 1.1rem 1.4rem 0.4rem;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.tldr p {
+  margin-bottom: 1rem;
+}
+
+.tldr-label {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+// ------------------------------------------------------------- blog lists ----
+
+.post-list {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  font-family: var(--font-ui);
+  font-size: 0.98rem;
+}
+
+.post-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.9rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  margin: 0;
+}
+
+.post-list li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+.post-meta {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-family: var(--font-ui);
+}
+
+.post-header .post-meta {
+  margin: -0.5rem 0 1.8rem;
+}
+
+.post-tags a {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.post-tags a:hover {
+  text-decoration: underline;
+}
+
+.tag-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  font-family: var(--font-ui);
+}
+
+// -------------------------------------------------------------- 404 page ----
+
+.page-404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.notfound {
+  text-align: center;
+  font-family: var(--font-prose);
+}
+
+.notfound .mark-lg {
+  margin-bottom: 1.5rem;
+}
+
+.notfound-label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.notfound h1 {
+  font-size: 1.9rem;
+  font-weight: 400;
+  margin: 0 0 1.2rem;
+}
+
+// ---------------------------------------------------------------- footer ----
+
+.site-footer {
+  max-width: 56rem;
+  margin: 3rem auto 0;
+  padding: 1.25rem var(--gutter) 3rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.site-footer p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 0;
+}
+
+.site-footer a {
+  color: var(--ink);
+  padding: 0.5rem 0; // comfortable hit target
+}
+
+.site-footer a:hover {
+  color: var(--accent);
+}
