@@ -13,7 +13,7 @@ Today, journey.pm becomes the public home of The Deliberation Journey — a soft
 
 > Trunk-based development won for humans, but its trunk only holds code. Everything else a product is — the intent, the decisions, the behavior we promised — lived in developers' heads. Agents don't have heads: whatever they must know has to be materialized.
 >
-> So we lift trunk-based development by one move. The trunk becomes the baseline, the whole product description under version control. The branch becomes a journey that proposes deltas to any of it, plus the decisions and evidence behind them, passing consensus gates where roles sign off. On return, the deltas merge into the baseline and the journey freezes into an immutable record — the product's memory of why it is the way it is. Code becomes the disposable projection; consensus binds to intent and observable behavior.
+> So we lift trunk-based development by one move. The trunk becomes the product definition — the whole product under version control. The branch becomes a journey that proposes deltas to any of it, plus the decisions and evidence behind them, passing consensus gates where roles sign off. On return, the deltas merge into the definition and the journey freezes into an immutable record — the product's memory of why it is the way it is. Code becomes the disposable projection; consensus binds to intent and observable behavior.
 
 The full model is on [The Model](/methodology/); the conformance test is on [Invariants](/invariants/).
 

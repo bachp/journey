@@ -1,11 +1,11 @@
 +++
 title = "About"
 description = "What this site is, who runs it, and under what license."
-weight = 5
+weight = 6
 # TODO: fill in the contact mailto, e.g. contact = "hello@journey.pm"
 +++
 
-**This site** is the public home of [The Deliberation Journey](/methodology/) — a software-development methodology for the agentic era. It carries the evergreen pages: the core model, the invariants, a condensed comparison map. The [blog](/blog/) carries the working — comparison deep-dives, the metrics model, naming and vocabulary.
+**This site** is the public home of [The Deliberation Journey](/methodology/) — a software-development methodology for the agentic era. It carries the evergreen pages: the core model, how a journey reaches agreement, the invariants, and a condensed comparison map. The [blog](/blog/) carries the working — comparison deep-dives, the metrics model, naming and vocabulary.
 
 The site is deliberately plain: no tracking, no external requests, no JavaScript. A methodology whose premise is that agents read the trunk should let agents — and anyone — read its site, so there is a machine-readable index at [llms.txt](/llms.txt).
 

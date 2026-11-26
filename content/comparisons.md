@@ -1,10 +1,10 @@
 +++
 title = "Comparisons"
 description = "A condensed map of the landscape as partial implementations: trunk-based development, OpenSpec, Spec Kit, Kiro — and the one-line verdicts."
-weight = 3
+weight = 4
 +++
 
-The methodology is a protocol, not a file format — and the landscape already contains working pieces of it. Each entry below is a **partial implementation** of the same data-model half: a specific structuring of the baseline and of the deltas, exactly the two things the methodology leaves implementation-defined. None implements the protocol half — consensus semantics and a provenance regime. The three [invariants](/invariants/) are the test that decides how much of the methodology each one realizes.
+The methodology is a protocol, not a file format — and the landscape already contains working pieces of it. Each entry below is a **partial implementation** of the same data-model half: a specific structuring of the product definition and of the deltas, exactly the two things the methodology leaves implementation-defined. None implements the protocol half — consensus semantics and a provenance regime. The three [invariants](/invariants/) are the test that decides how much of the methodology each one realizes.
 
 **Trunk-based development** (+ feature flags) is the topology the methodology generalizes: one trunk, short-lived branches, integrate back, collision means rebase and re-run. The one lift: the trunk carries the whole product description, not just code — and the journey, taking the place of the branch, covers the whole product too. Flags underneath remain the right tool for exposure control; they tell you the artifact isn't hurting users, never that stakeholders agreed it should exist.
 
@@ -22,6 +22,6 @@ The one-line verdicts:
 - **Spec Kit** is waterfall re-tooled for agent throughput — it keeps the phase the methodology abolishes.
 - **Kiro** is spec-driven development as a product feature — an excellent solo loop, no consensus.
 
-The pattern holds across the whole landscape, not just the spec tools: each approach owns one piece of the puzzle — scenarios, constitutions, hooks, personas, decision provenance, intent gates, exposure control — and none combines consensus semantics, customer inclusion, persistent product truth, and calibrated agent autonomy. The partial implementations are witnesses that the space is real, not competitors: they prove the baseline-and-delta core works, and they mark exactly where the unsolved half begins — the moment more than one human needs to agree.
+The pattern holds across the whole landscape, not just the spec tools: each approach owns one piece of the puzzle — scenarios, constitutions, hooks, personas, decision provenance, intent gates, exposure control — and none combines consensus semantics, customer inclusion, persistent product truth, and calibrated agent autonomy. The partial implementations are witnesses that the space is real, not competitors: they prove the definition-and-delta core works, and they mark exactly where the unsolved half begins — the moment more than one human needs to agree.
 
 Detailed comparison write-ups are planned as blog posts.

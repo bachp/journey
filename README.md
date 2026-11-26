@@ -3,11 +3,10 @@
 The public website for **The Deliberation Journey** — a software-development
 methodology for the agentic era. Built with
 [Zola](https://www.getzola.org/), hand-rolled theme (no vendored theme),
-hosted on [Codeberg Pages](https://docs.codeberg.org/codeberg-pages/) at
-<https://journey.pm>.
+served from GitHub Pages at <https://journey.pm>.
 
-`BRIEF.md` in the repo root is the design contract for this site: the pages,
-the design direction, the deployment setup, and the verification bar.
+The canonical statement of the methodology lives in the methodology
+repository, not here: this site distils it for a public audience.
 
 ## Local development
 
@@ -17,45 +16,31 @@ nix run nixpkgs#zola -- serve
 
 (`build` and `check` work the same way; `check` verifies internal links.)
 
-## Deployment — Codeberg Pages + custom domain
+## Deployment — GitHub Pages + custom domain
 
-Deploys run from `main` via the Forgejo Actions workflow in
-`.forgejo/workflows/pages.yml`: a pinned Zola 0.22 container builds the site,
-then the official [git-pages action](https://codeberg.org/git-pages/action)
-deploys `public/`. Pushes to any other branch never publish (draft branches
-would otherwise go live).
+`.github/workflows/pages.yml` builds with a pinned Zola, runs `zola check`,
+and publishes `public/` through the Pages artifact API. Only pushes to
+`main` publish — draft branches would otherwise go live.
 
-### First deploy
+`static/CNAME` pins the site to `journey.pm`. At **Infomaniak**, the DNS
+records for the apex are the four GitHub Pages A records (and optionally the
+AAAA records):
 
-1. Create the Codeberg repository and push this repo to it.
-2. Point DNS at Codeberg. At **Infomaniak**, add these records for
-   `journey.pm` (values from the Codeberg docs — they may change, so check the
-   linked page rather than trusting this file):
+| Type | Name | Value |
+|---|---|---|
+| A | `journey.pm` | `185.199.108.153` |
+| A | `journey.pm` | `185.199.109.153` |
+| A | `journey.pm` | `185.199.110.153` |
+| A | `journey.pm` | `185.199.111.153` |
+| CNAME | `www` | `bachp.github.io` |
 
-   | Type | Name | Value |
-   |---|---|---|
-   | A | `journey.pm` | `217.197.84.141` |
-   | AAAA | `journey.pm` | `2a0a:4580:103f:c0de::2` |
-   | TXT | `_git-pages-forge-allowlist.journey.pm` | `"https://codeberg.org/<username>/journey.pm.git"` |
+See <https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site>
+for the authoritative values. Enable "Enforce HTTPS" in the repository's
+Pages settings once the certificate is issued.
 
-   Use a modest TTL (e.g. `3600`) so the host can be flapped during setup.
-   The `<username>` is the Codeberg account (or organization) that owns the
-   repo. See <https://docs.codeberg.org/codeberg-pages/using-custom-domain/>
-   for the authoritative values and the CAA-record pitfall.
+The repository must be public, or Pages requires a paid plan.
 
-3. Push to `main` (or trigger the workflow); the first deploy bootstraps the
-   TLS certificate. The `server: codeberg.page` parameter in the workflow is
-   what makes that first custom-domain deploy possible — keep it.
+## Content and license
 
-### `www`
-
-Deliberately **apex-only** for now. If `www.journey.pm` is ever wanted, the
-docs describe the pattern: a `_redirects` file in the site redirecting
-`www → apex`, plus a second Pages deploy target for the `www` host (with its
-own DNS setup). See
-<https://docs.codeberg.org/codeberg-pages/using-custom-domain/>.
-
-## License
-
-- **Content:** CC BY-SA 4.0 — placeholder decision, confirmable by the author.
+- **Content:** CC BY-SA 4.0.
 - **Site code:** AGPL-3.0-or-later.

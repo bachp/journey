@@ -10,7 +10,8 @@ documentation: plain prose, no tracking, no external requests.
 
 ## Pages
 
-- [The Model](https://journey.pm/methodology/): baseline, journey, return — the core model, its one-lift statement, its axiom, and its two change regimes.
+- [The Model](https://journey.pm/methodology/): product definition, journey, return — the core model, its four artifact regimes, its one-lift statement, and the axiom.
+- [Deliberation](https://journey.pm/deliberation/): how a journey earns agreement — the two gates, per-role consensus, evidence, type and risk, states, and the return.
 - [Invariants](https://journey.pm/invariants/): the three invariants any conforming implementation must provide — the conformance test for the methodology.
 - [Comparisons](https://journey.pm/comparisons/): a condensed map of the landscape as partial implementations: trunk-based development, OpenSpec, Spec Kit, Kiro.
 - [Blog](https://journey.pm/blog/): working notes — the naming story, the announcement, and (planned) comparison deep-dives and the metrics model.
