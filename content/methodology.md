@@ -23,7 +23,7 @@ Every artifact belongs to one of four types. The distinction is not how long it 
 | Type | Question it answers | Change regime |
 |---|---|---|
 | **Maintained** | What is the product now? | Kept current in place, through explicit change. The charter, requirements, specifications, acceptance criteria, tests, code. |
-| **Provenance** | Why does the product look like this? | Never edited. A later change replaces it. Intents, plans, results, reviews, Journey Records, Product Definition Snapshots. |
+| **Provenance** | Why does the product look like this? | Revised while its journey runs, frozen at the return. A later change replaces it rather than editing it. Intents, plans, results, reviews, Journey Records, Product Definition Snapshots. |
 | **Derived** | How is the product produced? | Rebuilt from the definition. Build outputs, binaries, generated code. No gate owns a derived artifact. |
 | **Meta** | How does the repository apply the methodology? | Versioned with the repository and edited in place; the commit message is the record. The journey registry, the confidence dial. |
 
