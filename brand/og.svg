@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+      gradientTransform="translate(210 120) scale(760)">
+      <stop offset="0" stop-color="#00cfbe" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#00cfbe" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#17171a"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect x="0.5" y="0.5" width="1199" height="629" fill="none" stroke="#2a2a2c"/>
+
+  <g transform="translate(80 66) scale(1.9)" fill="none" stroke="#00cfbe" stroke-width="2.5">
+    <circle cx="9" cy="23" r="4"/>
+    <path d="M9 19 C9 6, 28 6, 28 14 C28 20, 22 23, 13 23" stroke-linecap="round"/>
+  </g>
+  <text x="148" y="112" font-family="Inter" font-size="34" font-weight="600" fill="#f4f4f5">journey<tspan fill="#00cfbe">.pm</tspan></text>
+
+  <text x="80" y="262" font-family="Inter" font-size="22" font-weight="600" fill="#00cfbe" letter-spacing="3.2">THE DELIBERATION JOURNEY</text>
+
+  <text x="80" y="352" font-family="Inter" font-size="68" font-weight="600" fill="#f4f4f5">Every journey starts</text>
+  <text x="80" y="430" font-family="Inter" font-size="68" font-weight="600" fill="#f4f4f5">with a conversation.</text>
+  <text x="80" y="492" font-family="Inter" font-size="34" font-weight="400" fill="#a1a1aa">Every conversation ends as a record.</text>
+
+  <line x1="80" y1="546" x2="1120" y2="546" stroke="#2a2a2c"/>
+  <text x="80" y="588" font-family="Inter" font-size="22" font-weight="400" fill="#71717a">Trunk-based development for the age of agents</text>
+  <text x="1120" y="588" text-anchor="end" font-family="Inter" font-size="22" font-weight="500" fill="#00cfbe">journey.pm</text>
+</svg>
