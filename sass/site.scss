@@ -745,3 +745,28 @@ a:hover {
 
   .pager-next { margin-left: auto; text-align: right; }
 }
+
+// --- Glossary -------------------------------------------------------------
+// Definitions are markup, not headings: each term needs a stable id to link
+// at, without inflating the page outline with thirty h3s.
+.glossary {
+  margin: 1.25rem 0 2rem;
+
+  dt {
+    font-weight: 600;
+    margin-top: 1.25rem;
+    color: var(--ink);
+    scroll-margin-top: 5rem;
+
+    &:target { color: var(--accent); }
+  }
+
+  dd {
+    margin: 0.3rem 0 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border-soft);
+    color: var(--ink-soft);
+
+    code { color: var(--ink); }
+  }
+}
