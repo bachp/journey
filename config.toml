@@ -18,3 +18,8 @@ taxonomies = [
 
 # Compile sass/site.scss -> static/site.css
 compile_sass = true
+
+# Every heading becomes a linkable anchor — the site gets pasted into chat
+# mid-conversation, so "read this section" has to have a URL.
+[markdown]
+insert_anchor_links = "heading"
