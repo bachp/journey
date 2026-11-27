@@ -22,9 +22,13 @@ nix run nixpkgs#zola -- serve
 and publishes `public/` through the Pages artifact API. Only pushes to
 `main` publish — draft branches would otherwise go live.
 
-`static/CNAME` pins the site to `journey.pm`. At **Infomaniak**, the DNS
-records for the apex are the four GitHub Pages A records (and optionally the
-AAAA records):
+The custom domain is set in **Settings → Pages → Custom domain**, not by a
+file: with an Actions publishing source GitHub ignores any `CNAME` in the
+artifact. `static/CNAME` is kept as documentation of the canonical domain
+(and would be required if the publishing source ever changes to a branch).
+
+At **Infomaniak**, the records for the apex are the four GitHub Pages A
+records (optionally the AAAA set), plus a `CNAME` for `www`:
 
 | Type | Name | Value |
 |---|---|---|
@@ -33,6 +37,9 @@ AAAA records):
 | A | `journey.pm` | `185.199.110.153` |
 | A | `journey.pm` | `185.199.111.153` |
 | CNAME | `www` | `bachp.github.io` |
+
+Do not use `DNAME`: it redirects names *below* its owner and leaves the apex
+itself unresolved (RFC 6672 §2.3).
 
 See <https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site>
 for the authoritative values. Enable "Enforce HTTPS" in the repository's
