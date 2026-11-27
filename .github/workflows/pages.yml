@@ -1,6 +1,5 @@
 # Build the Zola site and publish it to GitHub Pages.
-# Serves https://journey.pm from the CNAME in static/; pushes to any other
-# branch never publish.
+# Only pushes to main publish; a draft branch would otherwise go live.
 
 name: Pages
 

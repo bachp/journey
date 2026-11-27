@@ -1,8 +1,7 @@
 # BRIEF — journey.pm static site (The Deliberation Journey)
 
 You are building the public website for a software-development methodology called
-**The Deliberation Journey**. It will be hosted at **https://journey.pm** on
-**Codeberg Pages**. This brief is self-contained; read it fully before writing code.
+**The Deliberation Journey**. It will be hosted at **https://journey.pm** as a static site. This brief is self-contained; read it fully before writing code.
 
 ## 1. What this site is
 
@@ -113,9 +112,8 @@ Also produce:
   the few code-ish spans (state names like `departure → exploration → return`).
 - Prose max-width ~68ch, generous paragraph spacing, `text-wrap: pretty` on prose.
 - Header: wordmark "journey.pm" (lowercase, letterspaced) + the journey mark;
-  nav links right: Model · Invariants · Comparisons · Blog · About.
-  Footer: license line, Atom feed link, "hosted on Codeberg Pages" with repo link
-  placeholder `https://codeberg.org/JOURNEY-PM-ORG/journey.pm` (TODO comment to fix).
+  nav links right: Model · Deliberation · Invariants · Comparisons · Blog · About.
+  Footer: license line, Atom feed link, and a source link.
 - Responsive single column; nav collapses to a simple wrapped row (no hamburger JS).
 - Accessible: real focus states, link underlines, AA contrast for both modes,
   hit targets ≥44px where interactive.
@@ -133,40 +131,7 @@ Also produce:
 - Blog posts front matter: `title`, `date` (use 2026-08-25), `[taxonomies] tags = [...]`.
 - `.gitignore`: `public/`, `.zola_cache/` (if created).
 
-## 6. Deployment — Codeberg Pages via Forgejo Actions
-
-Create `.forgejo/workflows/pages.yml`:
-
-- Trigger: push to `main` only (docs warn draft branches would publish).
-- Build: recommend `container: image: ghcr.io/getzola/zola:v0.22.1` with
-  `entrypoint: [""]`, steps `actions/checkout@v4` then `zola build` then the
-  deploy step. If you find a more canonical runner setup, use it, but keep the
-  Zola version pinned to 0.22.x.
-- Deploy step uses the official action from the Codeberg docs
-  (`https://codeberg.org/git-pages/action` — reference it exactly as the docs'
-  "custom domain" case shows):
-  `with: site: journey.pm, server: codeberg.page, source: public`,
-  token from the runner-provided secret. The `server` parameter is REQUIRED for
-  the first custom-domain deploy (TLS bootstrap loop) — keep it permanently.
-- Validate the YAML parses (e.g. `python3 -c "import yaml,sys; yaml.safe_load(open('.forgejo/workflows/pages.yml'))"`).
-
-`README.md` must document, in order:
-
-1. What this repo is; the BRIEF is the design contract.
-2. Local dev: `nix run nixpkgs#zola -- serve`.
-3. First deploy: create the Codeberg repo, push, then set DNS at Infomaniak:
-   - `A     journey.pm                 → 217.197.84.141`
-   - `AAAA  journey.pm                 → 2a0a:4580:103f:c0de::2`
-   - `TXT   _git-pages-forge-allowlist.journey.pm → "https://codeberg.org/<username>/journey.pm.git"`
-   (exact values from Codeberg docs; note they may change — link
-   https://docs.codeberg.org/codeberg-pages/using-custom-domain/).
-   Suggest a modest TTL (e.g. 3600) so the host is flappable.
-4. `www` handling: deliberately apex-only for now; note the `_redirects` +
-   second deploy-target pattern from the docs for later.
-5. License: content under **CC BY-SA 4.0** (placeholder decision — flag it in the
-   README as confirmable), site code under **AGPL-3.0-or-later**.
-
-## 7. Verification (do all, in order — this is the acceptance bar)
+## 6. Verification (do all, in order — this is the acceptance bar)
 
 1. `nix run nixpkgs#zola -- build` exits 0 in the repo root.
 2. `nix run nixpkgs#zola -- check` — no broken internal links (fix any).
