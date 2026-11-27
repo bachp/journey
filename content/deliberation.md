@@ -51,7 +51,9 @@ A gate that genuinely cannot pass does not linger. It moves to `blocked` with th
 
 The type names the path, not the artifact list: a feature journey can also emit an ADR. And an ADR is what a decision-bearing journey emits — not a parallel process. A record that no journey agreed to is a proposal with good formatting.
 
-**Risk is what is at stake.** Every journey carries a risk class — low, elevated, high — assessed at incubation exit against what is at stake (safety, security, privacy, compliance, operational continuity), how reversible a wrong outcome is, who is exposed, and how much uncertainty remains. The assessment is evidence, not intuition: it names the dimensions that drove the class and is recorded with the intent, so the class is auditable and re-derivable.
+**Risk is assessed in two parts, recorded as one profile.** The first is the **blast radius**: which surfaces of the product the journey reaches into — requirements, architecture, end-user documentation, behavior, code. It is read from the deltas, not from the size of the change: a rename can reach three surfaces, an authorization fix may reach one. That set decides who must own the gates and how many surfaces the evidence has to cover; a journey reaching requirements, architecture and end-user documentation at once is systemic, and every owning role is at the table. Journey type is the highest surface a journey reaches — the blast radius is the whole set.
+
+The second is **what is at stake**: assessed at incubation exit against safety, security, privacy, compliance, operational continuity, how reversible a wrong outcome is, who is exposed, and how much uncertainty remains. The assessment is evidence, not intuition: it names the dimensions that drove the class and is recorded with the intent, so the class is auditable and re-derivable.
 
 The risk class governs ceremony independently of type. It raises the evidence floor and decides who must provide it; it adds roles to gates the type alone would not require; it caps how far autonomy may substitute for a human decision; it sets how strong customer evidence must be.
 
@@ -61,6 +63,8 @@ Two rules keep the cheap lanes from becoming the place where risk hides:
 - **Reclassification is evidence-triggered and auditable.** A behavior delta in a "refactoring", a compliance dimension in a "copy fix": the journey escalates out of its lane, because the lane was rented by the risk class, not owned by the type.
 
 Ceremony scales with evidence and risk — never with gate count. A high-risk trivial journey is not a contradiction; it is the system working.
+
+The profile is a prediction, so the return can check it: the surfaces it named are compared against the deltas that actually landed. A journey that reached further than its profile claimed is a calibration error in the assessment, not a defect in the change.
 
 ## States
 

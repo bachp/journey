@@ -48,7 +48,7 @@ Consensus is **per gate and per role**, and it is not unanimity. Each role holds
 
 ## Type and risk are independent
 
-**Type** is what the journey publishes — `feature > decision > refactoring > trivial` — and names the path, not the artifact list. **Risk** is what is at stake, and it sets the evidence floor, the roles required, and how much autonomy may stand in for a human decision.
+**Type** is what the journey publishes — `feature > decision > refactoring > trivial` — and names the path, not the artifact list. **Risk** is a recorded profile in two parts: the **blast radius** (which surfaces the journey reaches into — requirements, architecture, end-user documentation, behavior, code; that is who must be at the gates) and what is at stake (that is how much evidence they demand, and how far autonomy may stand in for a human decision).
 
 Ceremony scales with evidence and risk, never with gate count. Unclear risk is high risk until evidence resolves it, and reclassification is auditable — so the cheap lanes can't become the place where risk hides. A high-risk trivial change is not a contradiction; it is the system working.
 

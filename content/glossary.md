@@ -102,7 +102,10 @@ Terms are grouped, not alphabetical: each group is a place where a conversation 
 <dd>What the journey publishes, in the order <code>feature &gt; decision &gt; refactoring &gt; trivial</code>. The type names the path, not the artifact list: a feature journey can also emit an ADR. <a href="/deliberation/#two-independent-axes-type-and-risk">Developed here</a>.</dd>
 
 <dt id="risk-profile">Risk profile</dt>
-<dd>The recorded statement of what is at stake in a change and why, assessed against safety, security, privacy, compliance, continuity, reversibility, exposure, and residual uncertainty. It carries the <a href="#risk-class">risk class</a> and decides which evidence and which roles the gates require.</dd>
+<dd>The recorded statement of what a change costs to agree on and what is at stake, made of two parts. Its first part is the <a href="#blast-radius">blast radius</a> — which surfaces of the product the journey reaches into, and therefore who must be at the gates. Its second is what is at stake, assessed against safety, security, privacy, compliance, continuity, reversibility, exposure, and residual uncertainty. Together they set the <a href="#risk-class">risk class</a>, and with it the evidence the gates demand and the roles they require.</dd>
+
+<dt id="blast-radius">Blast radius</dt>
+<dd>The surfaces of the product a journey reaches into: <strong>requirements, architecture, end-user documentation</strong>, behavior, and code. It is read from the deltas the journey proposes, not from its size — a rename can reach three surfaces, an authorization fix may reach one. Requirements, architecture and end-user documentation are the definition-level surfaces: each brings a different owning role to the gate, and a journey reaching all three is systemic. Type is the highest surface a journey reaches; the blast radius is the whole set.</dd>
 
 <dt id="risk-class">Risk class</dt>
 <dd><code>low</code>, <code>elevated</code>, <code>high</code> — the tier the risk profile lands in. It sets the evidence floor, the roles in the gates, and how far autonomy may substitute for a human decision. Unclear risk is high risk until evidence resolves it, and reclassification is auditable.</dd>
